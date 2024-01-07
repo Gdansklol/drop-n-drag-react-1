@@ -47,15 +47,19 @@ const App = () => {
             return (
               <li key={id}>
                 <div className='characters-thumb'>
-                  <img />
+                  <img src={thumb} alt={`{name} Thumb`}/>
                 </div>
+                <p>
+                  {name}
+                </p>
               </li>
-            )
+            );
           })}
-
         </ul>
       </header>
-      
+      <p>
+        Images from <a></a>
+      </p>
     </div>
   )
 }
