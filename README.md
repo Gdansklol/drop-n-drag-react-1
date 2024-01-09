@@ -81,7 +81,7 @@ import { Draggable } from 'react-beautiful-dnd';
 
 # Important **
 
-<h1>
+<h4>
 Not for this case, but For every one - check provided.draggableProps not provided.dropableProps
 
 ```js
@@ -101,4 +101,4 @@ Not for this case, but For every one - check provided.draggableProps not provide
 
 
 RBD try find node by provided.draggableProps. Missing this props got error: Unable to find draggable with id: X
-</h1>
+</h4>
