@@ -10,7 +10,6 @@
   font-size: calc(10px + 1.5vmin);
 }
 
-
 .App-link {
   color: #61dafb;
 }
@@ -29,7 +28,7 @@
   padding-left: 0;
 }
 
-.characters li{
+.characters li {
   display: flex;
   align-items: center;
   border: solid 2px #d0d0d0;
@@ -59,4 +58,3 @@
   width: 100%;
   height: auto;
 }
-

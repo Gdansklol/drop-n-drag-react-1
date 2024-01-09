@@ -175,7 +175,241 @@ characters li{
   height: auto;
 }
 ```
-- 3:52
+- 4:02
+ **onDragEnd**
+onDragEnd={handleOnDragEng}
+
+- update ver
+
+```js
+
+  function handleOnDragEnd(result) {
+    console.log(result);
+    
+  }
+
+  <DragDropContext onDragEnd={handleOnDragEng}>
+  
+```
+
+- update ver
+
+- use itmes.splice to fin out that original index
+and remove that from the arry[]
+- when we remove it , it gets returned as a new item 
+so we can grab that value to use later, 1
+
+```js
+    const [reorderdItem] = items.splice(result.source.index, 1);
+```
+
+- next we're going to go back to our items array
+and going to use splice again but this time
+to find *destination, index*
+
+because we then want to inject that item back into the array
+at its destination value and finally with our updated items array
+we can update our characters back to that items which will update 
+state. 
+
+```js
+    items.splice(result.destination.index, 0, reorderdItem);
+
+    updateCharacters(items);
+```
+**
+
+```js
+import React,{useState} from 'react';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import './App.css';
+
+const finalSpaceCharacters = [
+  {
+    id:'gray',
+    name: 'Gary Goodspeed',
+    thumb: '/images/gary.png'
+  },
+  {
+    id:'cato',
+    name: 'Little Cato',
+    thumb: '/images/cato.png'
+  },
+  {
+    id:'kvn',
+    name:'KVN',
+    thumb:'/images/kvn.png',
+  },
+  {
+    id: 'mooncake',
+    name: 'Mooncake',
+    thumb: '/images/mooncake.png'
+  },
+  {
+    id: 'quinn',
+    name: 'Quinn Ergon',
+    thumb: '/images/quinn.png'
+  }
+]
+
+const App = () => {
+  const [characters, updateCharacters] = useState(finalSpaceCharacters);
+  
+  function handleOnDragEnd(result) {
+    // console.log(result);
+    const items = Array.from(characters);
+    const [reorderdItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderdItem);
+
+    updateCharacters(items);
+
+  }
+  
+  return (
+    <div className='App'>
+      <header className="App-header">
+        <h1> Final Space Characters</h1>
+        <DragDropContext onDragEng={handleOnDragEnd}>
+          <Droppable droppableId='characters'>
+          {(provided)=> (
+              <ul className='characters' {...provided.droppableProps} ref={provided.innerRef}>
+              {finalSpaceCharacters.map(({id,name,thumb}, index)=> {
+                return (
+                  <Draggable key={id} draggableId={id} index={index} >
+                    {(provided) => (
+                         <li {...provided.draggableId} 
+                         {...provided.dragHandleProps}
+                         ref={provided.innerRef}>
+                         <div className='characters-thumb'>
+                           <img src={thumb} alt={`{name} Thumb`}/>
+                         </div>
+                         <p>
+                           {name}
+                         </p>
+                       </li>
+                    )}
+                  </Draggable>
+                );
+              })}
+              {provided.placeholder}
+            </ul>
+          )}
+        </Droppable>
+        </DragDropContext>
+      </header>
+      <p>
+      Images from <a href="https://final-space.fandom.com/wiki/Final_Space_Wiki">Final Space Wiki</a>
+      </p>
+    </div>
+  )
+}
+
+export default App;
+```
+
+----
+```js
+import React,{useState} from 'react';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import './App.css';
+
+const finalSpaceCharacters = [
+  {
+    id:'gray',
+    name: 'Gary Goodspeed',
+    thumb: '/images/gary.png'
+  },
+  {
+    id:'cato',
+    name: 'Little Cato',
+    thumb: '/images/cato.png'
+  },
+  {
+    id:'kvn',
+    name:'KVN',
+    thumb:'/images/kvn.png',
+  },
+  {
+    id: 'mooncake',
+    name: 'Mooncake',
+    thumb: '/images/mooncake.png'
+  },
+  {
+    id: 'quinn',
+    name: 'Quinn Ergon',
+    thumb: '/images/quinn.png'
+  }
+]
+
+const App = () => {
+  const [characters, updateCharacters] = useState(finalSpaceCharacters);
+  
+  function handleOnDragEnd(result) {
+    // console.log(result);
+    if (!result.destination ) return;
+    const items = Array.from(characters);
+    const [reorderdItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderdItem);
+
+    updateCharacters(items);
+
+  }
+  
+  return (
+    <div className='App'>
+      <header className="App-header">
+        <h1> Final Space Characters</h1>
+        <DragDropContext onDragEng={handleOnDragEnd}>
+          <Droppable droppableId='characters'>
+          {(provided)=> (
+              <ul className='characters' {...provided.droppableProps} ref={provided.innerRef}>
+              {/* {finalSpaceCharacters.map(({id,name,thumb}, index)=> { */}
+                   {characters.map(({id,name,thumb}, index)=> {
+                return (
+                  <Draggable key={id} draggableId={id} index={index} >
+                    {(provided) => (
+                         <li {...provided.draggableId} 
+                         {...provided.dragHandleProps}
+                         ref={provided.innerRef}>
+                         <div className='characters-thumb'>
+                           <img src={thumb} alt={`{name} Thumb`}/>
+                         </div>
+                         <p>
+                           {name}
+                         </p>
+                       </li>
+                    )}
+                  </Draggable>
+                );
+              })}
+              {provided.placeholder}
+            </ul>
+          )}
+        </Droppable>
+        </DragDropContext>
+      </header>
+      <p>
+      Images from <a href="https://final-space.fandom.com/wiki/Final_Space_Wiki">Final Space Wiki</a>
+      </p>
+    </div>
+  )
+}
+
+export default App;
+```
+---
 
 
+```bash
+npm install uuid
 
+```
+- 
+
+```bash
+npm install react@latest react-dom@latest react-beautiful-dnd@latest
+
+```
+
+- solving for issu
+helpful link : (https://stackoverflow.com/questions/60029734/react-beautiful-dnd-i-get-unable-to-find-draggable-with-id-1)

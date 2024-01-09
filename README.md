@@ -77,4 +77,28 @@ import { Draggable } from 'react-beautiful-dnd';
 </Draggable>;
 ```
 
+**
 
+# Important **
+
+<h1>
+Not for this case, but For every one - check provided.draggableProps not provided.dropableProps
+
+```js
+ <Draggable draggableId ={id} index={index} type="characters">
+
+         {(provided) => (
+            <div
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+            >
+              <h4 style={style}>{title}</h4>
+            </div>
+        )}
+</Draggable>
+```
+
+
+RBD try find node by provided.draggableProps. Missing this props got error: Unable to find draggable with id: X
+</h1>
